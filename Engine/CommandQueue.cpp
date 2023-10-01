@@ -35,12 +35,12 @@ void CommandQueue::Init(ComPtr<ID3D12Device> device, shared_ptr<SwapChain> swapC
 	// CreateFence
 	// - CPU와 GPU의 동기화 수단으로 쓰인다.
 	device->CreateFence(0, D3D12_FENCE_FLAG_NONE, IID_PPV_ARGS(&_fence));
-	_fenceEvent = ::CreateEvent(nullptr, FALSE, FALSE, nullptr);
+	_fenceEvent = ::CreateEvent(nullptr, FALSE, FALSE, nullptr); //event : 신호등 
 }
 
 void CommandQueue::WaitSync()
 {
-	// Advance the fence value to mark commands up to this fence point.
+	// Advance the fence value to mark commands up to this fence point. 일감의 번호를 증가(대기할 일감)
 	_fenceValue++;
 
 	// Add an instruction to the command queue to set a new fence point.  Because we 
@@ -52,7 +52,7 @@ void CommandQueue::WaitSync()
 	if (_fence->GetCompletedValue() < _fenceValue)
 	{
 		// Fire event when GPU hits current fence.  
-		_fence->SetEventOnCompletion(_fenceValue, _fenceEvent);
+		_fence->SetEventOnCompletion(_fenceValue, _fenceEvent); //파란불
 
 		// Wait until the GPU hits current fence event is fired.
 		::WaitForSingleObject(_fenceEvent, INFINITE);
@@ -67,8 +67,8 @@ void CommandQueue::RenderBegin(const D3D12_VIEWPORT* vp, const D3D12_RECT* rect)
 
 	D3D12_RESOURCE_BARRIER barrier = CD3DX12_RESOURCE_BARRIER::Transition(
 		_swapChain->GetCurrentBackBufferResource().Get(),
-		D3D12_RESOURCE_STATE_PRESENT, // ??? ???
-		D3D12_RESOURCE_STATE_RENDER_TARGET); // ???? ?????
+		D3D12_RESOURCE_STATE_PRESENT, // 화면 출력 (before)
+		D3D12_RESOURCE_STATE_RENDER_TARGET); // 외주 결과물 (after)
 
 	_cmdList->ResourceBarrier(1, &barrier);
 
@@ -86,13 +86,13 @@ void CommandQueue::RenderEnd()
 {
 	D3D12_RESOURCE_BARRIER barrier = CD3DX12_RESOURCE_BARRIER::Transition(
 		_swapChain->GetCurrentBackBufferResource().Get(),
-		D3D12_RESOURCE_STATE_RENDER_TARGET, // ???? ?????
-		D3D12_RESOURCE_STATE_PRESENT); // ??? ???
+		D3D12_RESOURCE_STATE_RENDER_TARGET, // 외주 결과물
+		D3D12_RESOURCE_STATE_PRESENT); // 화면 출력
 
 	_cmdList->ResourceBarrier(1, &barrier);
 	_cmdList->Close();
 
-	// Ŀ??? ????? ????
+	// 커맨드 리스트 수행
 	ID3D12CommandList* cmdListArr[] = { _cmdList.Get() };
 	_cmdQueue->ExecuteCommandLists(_countof(cmdListArr), cmdListArr);
 

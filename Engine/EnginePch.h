@@ -42,6 +42,11 @@ using Vec3		= XMFLOAT3;
 using Vec4		= XMFLOAT4;
 using Matrix	= XMMATRIX;
 
+enum
+{
+	SWAP_CHAIN_BUFFER_COUNT = 2
+};
+
 struct WindowInfo
 {
 	HWND	hwnd; // 출력 윈도우
@@ -50,6 +55,6 @@ struct WindowInfo
 	bool	windowed; // 창모드 or 전체화면
 };
 
-extern unique_ptr<class Engine> GEngine; //extern Engine 전방선언
+extern unique_ptr<class Engine> GEngine; //extern Engine 전방선언, 싱글톤처럼 사용하기 위함.
 
 
