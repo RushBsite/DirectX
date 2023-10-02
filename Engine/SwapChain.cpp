@@ -29,7 +29,7 @@ void SwapChain::Init(const WindowInfo& info, ComPtr<IDXGIFactory> dxgi, ComPtr<I
 	dxgi->CreateSwapChain(cmdQueue.Get(), &sd, &_swapChain);
 
 	for (int32 i = 0; i < SWAP_CHAIN_BUFFER_COUNT; i++)
-		_swapChain->GetBuffer(i, IID_PPV_ARGS(&_renderTargets[i])); //위에서 만든 버퍼 정보 저장
+		_swapChain->GetBuffer(i, IID_PPV_ARGS(&_rtvHeap[i])); //위에서 만든 버퍼 정보 저장
 }
 
 void SwapChain::Present()

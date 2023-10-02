@@ -30,17 +30,16 @@ public:
 	void SwapIndex();
 
 	ComPtr<IDXGISwapChain> GetSwapChain() { return _swapChain; }
-	ComPtr<ID3D12Resource> GetRenderTarget(int32 index) { return _renderTargets[index]; }
+	ComPtr<ID3D12Resource> GetRenderTarget(int32 index) { return _rtvHeap[index]; }
 
 	uint32 GetCurrentBackBufferIndex() { return _backBufferIndex; } //0 or 1
-	ComPtr<ID3D12Resource> GetCurrentBackBufferResource() { return _renderTargets[_backBufferIndex]; }
+	ComPtr<ID3D12Resource> GetCurrentBackBufferResource() { return _rtvHeap[_backBufferIndex]; }
 
 private:
 	ComPtr<IDXGISwapChain>	_swapChain;
-	ComPtr<ID3D12Resource>	_renderTargets[SWAP_CHAIN_BUFFER_COUNT];
+	ComPtr<ID3D12Resource>	_rtvHeap[SWAP_CHAIN_BUFFER_COUNT];
 
 	ComPtr<ID3D12DescriptorHeap>	_rtvHeap;
-	uint32							_rtvHeapSize = 0;
 	D3D12_CPU_DESCRIPTOR_HANDLE		_rtvHandle[SWAP_CHAIN_BUFFER_COUNT];
 
 	uint32					_backBufferIndex = 0;
