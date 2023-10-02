@@ -28,11 +28,15 @@ Shader Update 시 Pipline State 에 Root Signature 가 포함되어 업데이트
 >3. desc.table <br>
 >register의 용량이 매우 한정적(64DWORD)이기 때문에, 2와 3의 방법이 쓰이는것.<br>
 ><p align="center"><img src="https://github.com/RushBsite/DirectX/assets/28249906/a9e62430-8a3f-4619-b223-89f28215c019"></p>
->그림에서 확인가능하듯이 desc.table 방식은 최상위 테이블의 description이 View의 위치를 나타내는 구조이다.
+>그림에서 확인가능하듯이 desc.table 방식은 최상위 테이블의 description이 View의 위치를 나타내는 구조이다. CBV를 일종의 포인터로 생각하면 이해가 편하다.<br>
 ![image](https://github.com/RushBsite/DirectX/assets/28249906/a27d160d-b64b-4148-90cc-4d56fe160312)
 > root CBV 방식의 단점과 동일하게 복사하는 만큼 동일한 양의 view 가형성되어야 하는 문제가 역시 존재한다.<br>
 > 최초 root Signature 기술시, table 을 사용한 코드로 작성했기 때문에, 최종형은 다음과 같다. (TableDescriptor Heap)
 > ![image](https://github.com/RushBsite/DirectX/assets/28249906/4f5ff1e1-9476-452e-b7b0-333e145c2cf2)
+> >동작은
+> >1.gpu 쪽으로 메모리 카피 (빨강 -> 빨강)(`PushData`)<br>
+> >2. SetCBV -> CopyDescriptor (초록 -> 노랑) <br>
+> >3. CommitTable (노랑 -> table)
 
 
 ## Sample Code
