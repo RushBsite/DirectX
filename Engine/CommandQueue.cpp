@@ -72,6 +72,13 @@ void CommandQueue::RenderBegin(const D3D12_VIEWPORT* vp, const D3D12_RECT* rect)
 
 	_cmdList->SetGraphicsRootSignature(ROOT_SIGNATURE.Get());
 	GEngine->GetCB()->Clear();
+	GEngine->GetTableDescHeap()->Clear();
+
+	//desc table view를 여러번 만드는 것을 방지, 사용 힙 지정.
+	ID3D12DescriptorHeap* descHeap = GEngine->GetTableDescHeap()->GetDescriptorHeap().Get();
+	_cmdList->SetDescriptorHeaps(1, &descHeap);
+
+	_cmdList->ResourceBarrier(1, &barrier);
 
 	_cmdList->ResourceBarrier(1, &barrier);
 
