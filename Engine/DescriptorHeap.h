@@ -15,6 +15,8 @@ public:
 	D3D12_CPU_DESCRIPTOR_HANDLE		GetBackBufferView();
 
 private:
+
+	//DH [[View] [View]] -> [Resource]
 	ComPtr<ID3D12DescriptorHeap>	_rtvHeap;
 	uint32							_rtvHeapSize = 0;
 	D3D12_CPU_DESCRIPTOR_HANDLE		_rtvHandle[SWAP_CHAIN_BUFFER_COUNT];

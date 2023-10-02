@@ -38,5 +38,10 @@ public:
 private:
 	ComPtr<IDXGISwapChain>	_swapChain;
 	ComPtr<ID3D12Resource>	_renderTargets[SWAP_CHAIN_BUFFER_COUNT];
+
+	ComPtr<ID3D12DescriptorHeap>	_rtvHeap;
+	uint32							_rtvHeapSize = 0;
+	D3D12_CPU_DESCRIPTOR_HANDLE		_rtvHandle[SWAP_CHAIN_BUFFER_COUNT];
+
 	uint32					_backBufferIndex = 0;
 };
