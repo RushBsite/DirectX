@@ -10,6 +10,9 @@
     <Filter Include="Utils">
       <UniqueIdentifier>{078ef3c6-e0c5-456f-9f53-22511613e226}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Shader">
+      <UniqueIdentifier>{b20db5f8-4d6e-4c65-b1ea-226d0afbb2d1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -71,5 +74,10 @@
     <ClCompile Include="Mesh.cpp">
       <Filter>Resource</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Resources\Shader\default.hlsli">
+      <Filter>Shader</Filter>
+    </None>
   </ItemGroup>
 </Project>
