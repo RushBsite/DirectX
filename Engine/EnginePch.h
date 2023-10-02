@@ -55,9 +55,15 @@ struct WindowInfo
 	bool	windowed; // 창모드 or 전체화면
 };
 
-#define DEVICE		GEngine->GetDevice()->GetDevice()
-#define CMD_LIST	GEngine->GetCmdQueue->GetCmdList()
+struct Vertex
+{
+	Vec3 pos;
+	Vec4 color;
+};
 
+#define DEVICE		GEngine->GetDevice()->GetDevice()
+#define CMD_LIST	GEngine->GetCmdQueue()->GetCmdList()
+#define ROOT_SIGNATURE GEngine->GetRootSignature()->GetSignature()
 extern unique_ptr<class Engine> GEngine; //extern Engine 전방선언, 싱글톤처럼 사용하기 위함.
 
 
